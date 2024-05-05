@@ -37,11 +37,12 @@ class VnpayPlugin: FlutterPlugin, MethodCallHandler, ActivityAware , PluginRegis
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     if (call.method == "vnpay") {
       pendinResult = result
-      openVnPay(call.arguments() as Map<String,String>)
+      openVnPay(call.arguments() as Map<String,String>?)
     }
   }
 
-  private fun openVnPay(dict: Map<String,String>) {
+  private fun openVnPay(dict: Map<String,String>?) {
+    if(dict == null) return;
     if(context == null && pendinResult == null) {
       Handler().postDelayed({
         openVnPay(dict)
